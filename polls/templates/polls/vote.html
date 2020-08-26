@@ -1,0 +1,22 @@
+{% extends "polls/header.html"%}
+
+{% block content %}
+    
+    <h1>Who is your favourite Marvel superhero?</h1>
+
+
+    {% if error_message %} 
+        <p><strong>{{error_message}}</strong></p>
+    {% endif %}
+    <form action = "{%  url 'polls:vote' %}" method = "POST">
+    {% csrf_token %}
+    
+    {% for i in Candlist %}
+        <button class = "btn" type = "submit" name="choice" value="{{i.id}}">{{i.cand_name}}</button><br><br>
+    {% endfor %}
+    
+        
+    </form>
+
+{% endblock %}
+
