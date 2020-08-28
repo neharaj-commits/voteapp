@@ -10,12 +10,15 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .forms import NewUserForm
+
+# Create your views here.
+
 def index(request):
     return render (request= request,
                    template_name = "polls/index.html",
-                   context = {"use": User.objects.all})
+                   context = {"cand": Candidates.objects.all})
     
-# Create your views here.
+
 def signup(request):
     if request.method == "POST":
         form = NewUserForm(request.POST)
@@ -29,17 +32,21 @@ def signup(request):
         else:
             for msg in form.error_messages:
                 messages.error(request, f"{msg} : form.error_messages[msg]")
-                # print(form.error_messages[msg])
 
     form = NewUserForm
     return render(request, 
                   "polls/signup.html",
                   context = {"form":form} )
 
+
+
+
 def logout_request(request):
     logout(request)
     messages.info(request,"Logged out successfully")
     return redirect("polls:index")
+
+    
 
 def login_request(request):
     if request.method == "POST":
@@ -73,8 +80,9 @@ def vote(request):
             selected_choice = Candidates.objects.get(pk=request.POST['choice'])
             selected_choice.votes += 1
             selected_choice.save()
-            messages.info(request, f"You voted for {selected_choice.cand_name}")
-            return redirect('polls:index')
+            messages.info(request, f"You voted for {selected_choice.cand_name}. Thank you for voting!")
+            return logout_request(request)
+            # return redirect('polls:index')
         else:
             return render(request, 'polls/vote.html', {'error_message': "Please select a choice "})
     return render(request, 'polls/vote.html' , {'Candlist': Candidates.objects.all()})

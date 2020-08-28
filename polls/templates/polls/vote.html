@@ -1,22 +1,33 @@
 {% extends "polls/header.html"%}
 
 {% block content %}
+    <div class = "fadeIn" id="scrollsu">
+        <br>
+
+        <div class="abtttle" id="su">
+            <h1>Who is your favourite Marvel superhero?</h1>
+        </div>
+        <br><br>
     
-    <h1>Who is your favourite Marvel superhero?</h1>
+
+        <div class = "scrolltxt">
 
 
-    {% if error_message %} 
-        <p><strong>{{error_message}}</strong></p>
-    {% endif %}
-    <form action = "{%  url 'polls:vote' %}" method = "POST">
-    {% csrf_token %}
-    
-    {% for i in Candlist %}
-        <button class = "btn" type = "submit" name="choice" value="{{i.id}}">{{i.cand_name}}</button><br><br>
-    {% endfor %}
-    
+        {% if error_message %} 
+            <p><strong>{{error_message}}</strong></p>
+        {% endif %}
+        <form action = "{%  url 'polls:vote' %}" method = "POST">
+            {% csrf_token %}
         
-    </form>
+            {% for i in Candlist %}
+                <button class = "btn" id = "sbtn" type = "submit" name="choice" value="{{i.id}}">{{i.cand_name}}</button><br><br>
+            {% endfor %}
+        
+            
+        </form>
+        <br><br><br>
+        </div>
+    </div>
 
 {% endblock %}
 

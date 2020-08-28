@@ -22,6 +22,7 @@ class User(models.Model):
     
 class Candidates(models.Model):
     cand_name = models.CharField(max_length=200)
+    cand_text = models.TextField(default = "No Description")
     votes = models.IntegerField(default=0)
     def __str__(self):
         return self.cand_name

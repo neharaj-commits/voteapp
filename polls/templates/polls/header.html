@@ -1,38 +1,90 @@
 <head>
-    <!-- {% load static %} -->
+    {% load static %}
+
+    <!-- <link rel="stylesheet" href="{% static 'polls/css/indexstyle.css' %}"> -->
     
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+    <link rel="stylesheet" href="{% static 'polls/css/materialize.css' %}">
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 <body>
+
+
+    <script>  
+        window.onbeforeunload = function () {
+            window.scrollTo(0, 0);
+        }; 
+    </script>
     
 
 
     <nav>
         <div class="nav-wrapper">
-          <a href="/" class="brand-logo">VoteApp</a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <!-- <li><a href="/">Home</a></li> -->
-            {% if user.is_authenticated %}
-                
-                <!-- <li><a href="/profile">{{user.username}}</a></li> -->
-                <li>{{user.username}}</li>
-                <li><a href="/">Home</a></li>
-                <li><a href="/logout">Logout</a></li>
-            {% else %}
-                <li><a href="/signup">Signup</a></li>
-                <li><a href="/login">Login</a></li>
-            {% endif %}
-          </ul>
+            <a href="/" class="brand-logo">VoteApp</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                {% if user.is_authenticated and not user.is_staff %}
+                    <li>{{user.username}}</li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                {% else %}
+                    <li><a href="/signup">Signup</a></li>
+                    <li><a href="/login">Login</a></li>
+                {% endif %}
+            </ul>
         </div>
     </nav>
 
+    <div id = "bg1" class="fadeIn">
+        <br>
+        <div id="abtme">
+            <h1>WELCOME TO THE MARVEL SUPERHERO VOTING APP!</h1>
+        </div>
+        
+        <br><br><br>
+    </div>
+
     
 
-    <!-- <script>M.toast({html: "toasted!!!", classes: "green rounded", displayLength:2000})</script> -->
+
+    <!-- <div class="parallax-container">
+        <div class="parallax"><img src="../../static/polls/bgimg.jpg"></div>
+      </div>
+      <div class="section white">
+        <div class="row container">
+            <h2 class="header">Parallax</h2>
+            <p class="grey-text text-darken-3 lighten-3">
+                <div class="container">
+                      
+                </div>
+            </p>
+        </div>
+      </div>
+      <div class="parallax-container">
+        <div class="parallax">
+            <img src="../../static/polls/bgimg.jpg">
+            <img src="{% static 'polls/bgimg.jpg' %}">
+        </div>
+      </div> -->
+
+
+
+        {% block content%}
+        {% endblock %}
+
+      
+
+      <div id = "bg1" class="fadeIn">
+        <br>
+        <div id="abtme">
+        </div>
+        
+        <br><br><br><br>
+    </div> 
+
+    
 
     {% if messages %}
         {% for message in messages%}
@@ -48,10 +100,7 @@
         {% endfor%}
     {% endif %}
 
-    <div class="container">
-        {% block content%}
-        {% endblock %}  
-    </div>
+    
 
     
 
