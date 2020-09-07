@@ -14,10 +14,12 @@
 
         <div class = "scrolltxt">
             <p>
+                
                 {% if user.is_authenticated and not user.is_staff %}
                 <a href="/vote" ><strong><em>CLICK HERE TO VOTE FOR YOUR FAVOURITE SUPERHERO</em></strong></a>
                 {% else %}
-                <a href="/login" ><strong><em>LOGIN </em></strong></a> or <a href="/signup" ><strong><em>SIGN UP </em></strong></a> to vote for your favourite Superhero!
+                <a href="https://marvelvoteapp.hub.loginradius.com/auth.aspx?action=login&return_url=http://localhost:8000/vote" ><strong><em>LOGIN </em></strong></a> or <a href="https://marvelvoteapp.hub.loginradius.com/auth.aspx?action=register&return_url=http://localhost:8000/vote" >
+                    <strong><em>SIGN UP </em></strong></a> to vote for your favourite Superhero!
                 {% endif %}
             </p>
             <p>
@@ -48,6 +50,14 @@
 
 
         </div>
+        <!-- <script> 
+            function getParameterByName(name) { 
+            name = name.replace(/[[]/, '\[').replace(/[]]/, '\]'); 
+            var regex = new RegExp('[\?&]' + name + '=([^&#]*)'); 
+            var results = regex.exec(location.search); return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' ')); 
+            } 
+            var access_token = getParameterByName(“token”);
+        </script> -->
     
 
     

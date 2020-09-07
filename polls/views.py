@@ -10,13 +10,19 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .forms import NewUserForm
+import requests
 
 # Create your views here.
 
 def index(request):
+    # tok=request.GET.get('token','')
     return render (request= request,
                    template_name = "polls/index.html",
-                   context = {"cand": Candidates.objects.all})
+                   context = { 
+                            "cand": Candidates.objects.all},
+                            )
+
+    
     
 
 def signup(request):
@@ -42,9 +48,10 @@ def signup(request):
 
 
 def logout_request(request):
-    logout(request)
+    # logout(request)
+    messages.info(request,"")
     messages.info(request,"Logged out successfully")
-    return redirect("polls:index")
+    return redirect("https://marvelvoteapp.hub.loginradius.com/auth.aspx?action=logout&return_url=http://localhost:8000/")
 
     
 
@@ -73,8 +80,8 @@ def login_request(request):
 
 
 
-def vote(request):
-
+def vote(request):    
+    tok=request.GET.get('token','')
     if request.method == 'POST':
         if request.POST["choice"]:
             selected_choice = Candidates.objects.get(pk=request.POST['choice'])
@@ -84,5 +91,6 @@ def vote(request):
             return logout_request(request)
             # return redirect('polls:index')
         else:
+            # This needed only for radio button.
             return render(request, 'polls/vote.html', {'error_message': "Please select a choice "})
-    return render(request, 'polls/vote.html' , {'Candlist': Candidates.objects.all()})
+    return render(request, 'polls/vote.html' , {'tok':tok,'Candlist': Candidates.objects.all()})
